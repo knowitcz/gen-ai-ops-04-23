@@ -9,9 +9,10 @@ from app.api.account_routes import router as account_router
 from app.api.bank_routes import router as bank_router
 from app.api.client_routes import router as client_router
 from app.api.health_routes import router as health_router
+from app.api.transaction_routes import router as transaction_router
 from app.db import engine
 from app.logging_config import setup_logging
-from app.models import Client  # noqa: F401 - ensure table is registered
+from app.models import Client, Transaction  # noqa: F401 - ensure tables are registered
 from app.startup import create_default_accounts, create_default_clients
 
 # Setup logging first
@@ -35,6 +36,7 @@ app.include_router(account_router, prefix="/api/v1", tags=["account"])
 app.include_router(bank_router, prefix="/api/v1", tags=["bank"])
 app.include_router(client_router, prefix="/api/v1", tags=["client"])
 app.include_router(health_router, tags=["health"])
+app.include_router(transaction_router, prefix="/api/v1", tags=["transaction"])
 
 # Catch-all route for client-side navigation — must be defined after API routers
 # so it doesn't shadow them. Returns index.html for any unmatched path, allowing
